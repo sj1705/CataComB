@@ -1,12 +1,13 @@
-require('dotenv').config()
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const fs=require('fs');
+const util=require('util')
+const unlinkFile=util.promisify(fs.unlink)
 const multer = require("multer");
 const path= require('path');
-const uploadFile=require('./s3');
-const {UploadFile} = require("./s3");
+const UploadFile = require("./s3");
+const CompressFile = require("./compress");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
         cb(null, 'uploads')
@@ -36,22 +37,26 @@ app.get("/contact", function(req, res) {
 app.get("/services", function(req, res) {
   res.render("services");
 });
-app.get("/file", function(req, res) {
-  res.render("file");
+app.get("/file-upload", function(req, res) {
+  res.render("file-upload");
 });
-app.post("/file"  , upload.single("file"),async function(req,res){
-  console.log(req.file);
-  const file=req.path
-  console.log(file)
-  const result =  await UploadFile.UploadFile("package.json")
-  console.log(result)
-  res.render("file");
+ app.post("/file-upload"  , upload.single("file"),async function(req,res){
+  const file=req.file
+  const com=file.filename
+    await CompressFile.compress(com)
+     // console.log(com)
+   const result =  await UploadFile.Upload('uploads/'+com)
+   // console.log(result)
+   await unlinkFile(file.path);
+   // fs.unlinkSync('compressed.txt');
+   res.render("file-upload");
 });
 
 
 
 
 
+// exec('java -jar decompress.jar uploads/compressed.txt uploads/lorem.txt')
 
 
 
