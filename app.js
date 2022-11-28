@@ -1,6 +1,7 @@
 const express = require("express");
+const {exec} = require("child_process");
+const currentUser="defaultUserShrestha"
 const {Schema} = require("mongoose");
-
 const mongoose = require("mongoose");
 mongoose.connect("mongodb+srv://Admin:Catacomb@cluster0.mbgic6l.mongodb.net/?retryWrites=true&w=majority", {useNewUrlParser: true
 });
@@ -13,11 +14,12 @@ const bodyParser = require("body-parser");
 const app = express();
 const fs=require('fs');
 const util=require('util')
+util.promisify(exec)
 const unlinkFile=util.promisify(fs.unlink)
 const multer = require("multer");
 const path= require('path');
 const UploadFile = require("./s3");
-const CompressFile = require("./compress");
+const CompressFile = require("./compression");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
         cb(null, 'uploads')
@@ -59,12 +61,10 @@ app.get("/file-download", function(req, res) {
  app.post("/file-upload"  , upload.single("file"),async function(req,res){
   const file=req.file
   const com=file.filename
-    await CompressFile.compress(com)
-     // console.log(com)
-   const result =  await UploadFile.Upload('uploads/'+com)
-   // console.log(result)
-   await unlinkFile(file.path);
-   // fs.unlinkSync('compressed.txt');
+     await CompressFile.compress(com)
+     exec('java -jar encryption.jar uploads/' + com + ' uploads/'+com)
+     await UploadFile.Upload('uploads/'+com,currentUser)
+     await unlinkFile(file.path);
    res.render("file-upload");
 });
 

@@ -8,12 +8,13 @@ const s3= new AWS.S3({
 
 //uploading
 
- function Upload(file){
+ function Upload(file,currentUser){
     const fileStream=fs.readFileSync(file)
+     const key=currentUser+file
     const uploadParams = {
         Bucket:BUCKET_NAME,
         Body:fileStream,
-        Key:file
+        Key:key
     }
     return s3.upload(uploadParams).promise()
 }

@@ -18,7 +18,7 @@ exports.compress=compress
 
 function decompress(com) {
     return new Promise((resolve,reject)=>{
-        exec('java -jar compress.jar uploads/' + com + ' uploads/'+com,(error,stdout,stderr)=>
+        exec('java -jar decompress.jar downloads/' + com + ' downloads/'+com,(error,stdout,stderr)=>
         {
             if(error){
                 reject(error);
