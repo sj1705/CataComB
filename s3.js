@@ -11,6 +11,7 @@ const s3= new AWS.S3({
  function Upload(file,currentUser){
     const fileStream=fs.readFileSync(file)
      const key=currentUser+file
+     console.log(key)
     const uploadParams = {
         Bucket:BUCKET_NAME,
         Body:fileStream,
@@ -19,3 +20,18 @@ const s3= new AWS.S3({
     return s3.upload(uploadParams).promise()
 }
 exports.Upload = Upload
+
+
+function Download(key){
+     const downloadParams={
+         Bucket: BUCKET_NAME,
+         Key: key
+     }
+    console.log()
+    let readStream = s3.getObject(downloadParams).createReadStream()
+    let writeStream=fs.createWriteStream('downloads/a.txt');
+    console.log("file downloaded")
+     return readStream.pipe(writeStream)
+}
+exports.Download=Download
+

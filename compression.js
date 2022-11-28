@@ -16,9 +16,9 @@ const exec = require('child_process').exec;
 }
 exports.compress=compress
 
-function decompress(com) {
-    return new Promise((resolve,reject)=>{
-        exec('java -jar decompress.jar downloads/' + com + ' downloads/'+com,(error,stdout,stderr)=>
+async function decompress() {
+    return await new Promise((resolve,reject)=>{
+        exec('java -jar decompress.jar downloads/a.txt downloads/a.txt',(error,stdout,stderr)=>
         {
             if(error){
                 reject(error);
