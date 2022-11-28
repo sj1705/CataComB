@@ -1,4 +1,14 @@
 const express = require("express");
+const {Schema} = require("mongoose");
+
+const mongoose = require("mongoose");
+mongoose.connect("mongodb+srv://Admin:Catacomb@cluster0.mbgic6l.mongodb.net/?retryWrites=true&w=majority", {useNewUrlParser: true
+});
+const customerSchema={
+    email: String,
+    file:[]
+}
+const Customer = mongoose.model('Customer',customerSchema);
 const bodyParser = require("body-parser");
 const app = express();
 const fs=require('fs');
@@ -37,8 +47,14 @@ app.get("/contact", function(req, res) {
 app.get("/services", function(req, res) {
   res.render("services");
 });
+app.get("/loggedin-mid", function(req, res) {
+    res.render("loggedin-mid");
+});
 app.get("/file-upload", function(req, res) {
   res.render("file-upload");
+});
+app.get("/file-download", function(req, res) {
+    res.render("file-download");
 });
  app.post("/file-upload"  , upload.single("file"),async function(req,res){
   const file=req.file
@@ -57,7 +73,6 @@ app.get("/file-upload", function(req, res) {
 
 
 // exec('java -jar decompress.jar uploads/compressed.txt uploads/lorem.txt')
-
 
 
 
