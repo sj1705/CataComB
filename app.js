@@ -3,7 +3,6 @@ const {decompress} = require("./compression");
 const CompressFile = require("./compression");
 const {exec} = require("child_process");
 const currentUseremail="defaultUserShrestha@mail.com"
-const {Schema} = require("mongoose");
 const mongoose = require("mongoose");
 mongoose.connect("mongodb+srv://Admin:Catacomb@cluster0.mbgic6l.mongodb.net/?retryWrites=true&w=majority", {useNewUrlParser: true
 });
@@ -21,6 +20,7 @@ const unlinkFile=util.promisify(fs.unlink)
 const multer = require("multer");
 const path= require('path');
 const UploadFile = require("./s3");
+const {Download} = require("./s3");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
         cb(null, 'uploads')
@@ -67,8 +67,9 @@ app.get("/loggedin-mid", function(req, res) {
 app.get("/file-upload", function(req, res) {
   res.render("file-upload");
 });
-app.get("/file-download/:filename", (req, res) => {
-    res.download("downloads/a.txt","yourfile.txt")
+app.get("/file-download/:filename",  async (req, res) => {
+    await exec('java -jar decompress.jar downloads/a.txt downloads/a.txt')
+    res.download("downloads/a.txt", "b.txt")
 });
 app.get("/file-download", async function (req, res) {
     let downloadkey;
@@ -81,14 +82,11 @@ app.get("/file-download", async function (req, res) {
             console.log(downloadkey)
         }
     }).clone()
-    await UploadFile.Download(downloadkey)
+    await Download(downloadkey)
     await exec('java -jar decryption.jar downloads/a.txt downloads/a.txt')
-    await console.log("file decrypted")
-    await CompressFile.decompress
-    await exec('java -jar decompress.jar downloads/a.txt downloads/a.txt')
     await res.render("file-download");
 });
- app.post("/file-upload"  , upload.single("file"),async function(req,res){
+app.post("/file-upload"  , upload.single("file"),async function(req,res){
   const file=req.file
   const com=file.filename
      await CompressFile.compress(com)
