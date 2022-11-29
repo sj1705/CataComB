@@ -2,7 +2,7 @@ const express = require("express");
 const {decompress} = require("./compression");
 const CompressFile = require("./compression");
 const {exec} = require("child_process");
-const currentUseremail="defaultUserShrestha@mail.com"
+let currentUseremail="defaultUserShrestha@mail.com"
 const mongoose = require("mongoose");
 mongoose.connect("mongodb+srv://Admin:Catacomb@cluster0.mbgic6l.mongodb.net/?retryWrites=true&w=majority", {useNewUrlParser: true
 });
@@ -85,6 +85,29 @@ app.get("/file-download", async function (req, res) {
     await Download(downloadkey)
     await exec('java -jar decryption.jar downloads/a.txt downloads/a.txt')
     await res.render("file-download");
+});
+app.get("/logged-in", function (req,res){
+    res.render("logged-in")
+});
+app.post("/logged-in", function (req,res){
+    const customerInfo = new Customer({
+        email:req.body.currentuseremail
+    });
+    Customer.findOne({
+        email: req.body.currentuseremail
+    }, function(err, foundCustomer) {
+        if (!err) {
+            if (foundCustomer == null) {
+                customerInfo.save();
+                currentUseremail=req.body.currentuseremail
+            } else {
+                console.log(foundCustomer)
+                currentUseremail=req.body.currentuseremail
+            }
+        }
+    });
+    console.log(req.body.currentuseremail)
+    res.render("loggedin-mid")
 });
 app.post("/file-upload"  , upload.single("file"),async function(req,res){
   const file=req.file
