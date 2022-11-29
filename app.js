@@ -2,7 +2,7 @@ const express = require("express");
 const {decompress} = require("./compression");
 const CompressFile = require("./compression");
 const {exec} = require("child_process");
-let currentUseremail="defaultUserShrestha@mail.com"
+let currentUseremail=""
 const mongoose = require("mongoose");
 mongoose.connect("mongodb+srv://Admin:Catacomb@cluster0.mbgic6l.mongodb.net/?retryWrites=true&w=majority", {useNewUrlParser: true
 });
@@ -37,7 +37,8 @@ app.use(bodyParser.urlencoded({
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname));
 app.get("/", function(req, res) {
-  res.render("index");
+    let currentUseremail=""
+    res.render("index");
 });
 app.get("/about", function(req, res) {
   res.render("about");
@@ -105,7 +106,7 @@ app.post("/logged-in", function (req,res){
                 currentUseremail=req.body.currentuseremail
             }
         }
-    });
+    }).clone()
     console.log(req.body.currentuseremail)
     res.render("loggedin-mid")
 });
