@@ -1,9 +1,12 @@
 const fs=require('fs');
+require('dotenv').config();
 const BUCKET_NAME="catacombuserdata"
 const AWS= require('aws-sdk')
+const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
+const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 const s3= new AWS.S3({
-    accessKeyId:"AKIAYMSTELQSRD7KP46Q",
-    secretAccessKey:"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"
+    accessKeyId,
+    secretAccessKey
 });
 
 //uploading

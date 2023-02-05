@@ -2,9 +2,11 @@ const express = require("express");
 const {decompress} = require("./compression");
 const CompressFile = require("./compression");
 const {exec} = require("child_process");
+require('dotenv').config();
 let currentUseremail=""
+const mongoDBUrl = process.env.MONGODB_URL;
 const mongoose = require("mongoose");
-mongoose.connect("mongodb+srv://Admin:Catacomb@cluster0.mbgic6l.mongodb.net/?retryWrites=true&w=majority", {useNewUrlParser: true
+mongoose.connect(mongoDBUrl, {useNewUrlParser: true
 });
 const customerSchema={
     email: String,
