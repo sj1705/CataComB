@@ -38,6 +38,8 @@ app.use(bodyParser.urlencoded({
 }));
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname));
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+
 app.get("/", function(req, res) {
     let currentUseremail=""
     res.render("index");
@@ -71,8 +73,8 @@ app.get("/file-upload", function(req, res) {
   res.render("file-upload");
 });
 app.get("/file-download/:filename",  async (req, res) => {
-    await exec('java -jar decompress.jar downloads/a.txt downloads/a.txt')
     res.download("downloads/a.txt", "b.txt")
+    // res.redirect("/file-download");
 });
 app.get("/file-download", async function (req, res) {
     let downloadkey;
@@ -82,12 +84,18 @@ app.get("/file-download", async function (req, res) {
         } else {
             console.log("Result : ", docs);
             downloadkey=docs.file
-            console.log(downloadkey)
         }
     }).clone()
     await Download(downloadkey)
     await exec('java -jar decryption.jar downloads/a.txt downloads/a.txt')
+    await delay(2000)
     await res.render("file-download");
+});
+app.get("/download-mid", async function (req, res) {
+    await delay(2000)
+    await exec('java -jar decompress.jar downloads/a.txt downloads/a.txt')
+    await delay(2000)
+    res.redirect("/file-download/:abc");
 });
 app.get("/logged-in", function (req,res){
     res.render("logged-in")
