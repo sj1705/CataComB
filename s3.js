@@ -1,9 +1,9 @@
 const fs=require('fs');
-const BUCKET_NAME="catacombuserdata56"
+const BUCKET_NAME="catacombuserdata"
 const AWS= require('aws-sdk')
 const s3= new AWS.S3({
-    accessKeyId:"AKIAV54O7BMNGU2MPHMX",
-    secretAccessKey:"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"
+    accessKeyId:"AKIAYMSTELQSRD7KP46Q",
+    secretAccessKey:"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"
 });
 
 //uploading
