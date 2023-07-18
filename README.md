@@ -51,4 +51,4 @@ Huffman Coding: - Huffman coding is a lossless data compression algorithm. The i
 Advanced Encryption Satndard(AES): -
 The Advanced Encryption Standard (AES) is a symmetric-key block cipher published by the National symmetric-key block cipher published by the National Institute of Standard and Technology (NIST)in Institute of Standards and Technology (NIST) in December 2001. AES is a non-Feistel cipher that encrypts and decrypts a data block of 128 bits. It uses 10, 12, or 14 rounds. The key size, which can be 128, 192, or 256 bits, depends on the number of rounds. AES has defined three versions, with 10, 12, and 14 rounds. Each version uses a different cipher key size (128, 192, or 256), but the round keys are always 128 bits
 
-LINK TO TUTORIAL:https://youtu.be/VspgJmjc4KY
+LINK TO Application of project:https://youtu.be/VspgJmjc4KY
