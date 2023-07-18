@@ -6,7 +6,8 @@ Welcome to Catacomb, an innovative platform designed to redefine the way we secu
 
 I built Catacomb with a clear vision in mind: to provide a cloud-based private safe solution that combines robust security measures with efficient data compression techniques. By utilizing the trusted AES algorithm, Catacomb ensures that even the most sensitive data remains impervious to unauthorized access. With the inclusion of Huffman coding, we take data storage optimization to the next level, allowing users to make the most of their cloud storage resources.
 
-Technology Stack: -
+## Technology Stack:-
+
 Version Control
 - GitHub
 - Git
