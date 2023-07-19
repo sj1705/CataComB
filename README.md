@@ -41,20 +41,20 @@ The Advanced Encryption Standard (AES) is a symmetric-key block cipher published
 
 ## Local development
 
-To ensure that you are able to install everything properly, we would recommend you to have <b>Git</b>, <b>NPM</b> and <b>Node.js</b> installed.
+To ensure that you are able to install everything properly, I would recommend you to have <b>Git</b>, <b>NPM</b> and <b>Node.js</b> installed.
 
-We will first start with setting up the Local Project Environment:
+You can first start with setting up the Local Project Environment:
 
 ```sh
 git clone https://github.com/sj1705/CataComB.git
 cd CataComB-main
 ```
-Now we will add the environment variables
+Now you will add the environment variables
 
  - Create a .env file and put your AWS account Keys
  - In that .env only also put your mongodb atlas URL
 
-Once you run the Commands and get environment variables and everything fine, we are all set to run the app ✔️
+Once you run the Commands and get environment variables and everything fine, You are all set to run the app ✔️
 
 On the root level run the following command:
 
